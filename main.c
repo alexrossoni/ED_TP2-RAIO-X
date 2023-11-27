@@ -93,7 +93,7 @@ int main() {
             int tempoLaudo = rand() % 21 + 10; // Tempo do laudo entre 10 e 30 unidades
             simulacao.tempoTotalLaudos += tempoLaudo;
 
-            int tempoEntregaLaudo = rand() % 14400 + 1; // Tempo de entrega do laudo (menor que 7200 Un. de tempo está dentro do prazo, maior que 7200 Un. de tempo esta atrasado)
+            int tempoEntregaLaudo = rand() % 10000 + 1; // Tempo de entrega do laudo (menor que 7200 Un. de tempo está dentro do prazo, maior que 7200 Un. de tempo esta atrasado)
             if (tempoEntregaLaudo > 7200) {
                 totalLaudosAtrasados += 1;
             }
@@ -121,25 +121,45 @@ int main() {
             liberarRadiologista(&simulacao.radiologistas[radiologistaIndex]);
         }
 
-        // 4. Atualização do relatório de métricas a cada 10 unidades de tempo (ajuste conforme necessário)
+        // 4. Atualização do relatório de métricas a cada 10 unidades de tempo
         if (tempoMetricas % 10 == 0) {
             // Métricas de desempenho aqui
             totalLaudos = totalLaudosNormal + totalLaudosBronquite + totalLaudosPneumonia + totalLaudosFraturaFemur + totalLaudosApendicite;
-            printf("\n---Atualização do relatório de métricas:\n\n");
+            printf("\n------Atualização do relatório de métricas:\n\n");
 
             // Tempo médio de laudo, tempo médio de laudo por patologia, quantidade de exames após o limite de tempo
             if (totalLaudos > 0) {
-                printf("--Tempo médio de laudos: %ds\n", simulacao.tempoTotalLaudos / totalLaudos);
-                printf("--Laudos entregues em atraso: %ds\n\n", totalLaudosAtrasados);
+                printf("---Tempo médio de laudos: %d unid. tempo\n", simulacao.tempoTotalLaudos / totalLaudos);
+                printf("---Laudos entregues em atraso: %d\n\n", totalLaudosAtrasados);
                 printf("--Tempo médio de laudos por patologia:\n");
+                if (totalLaudosNormal > 0) {
+                    printf("-Tempo médio de laudo (Normal): %d unid. tempo\n", tempoTotalLaudosNormal / totalLaudosNormal);
+                } else {
+                    printf("-Tempo médio de laudo (Normal): Não há dados\n");
+                };
+                if (totalLaudosBronquite > 0) {
+                    printf("-Tempo médio de laudo (Bronquite): %d unid. tempo\n", tempoTotalLaudosBronquite / totalLaudosBronquite);
+                } else {
+                    printf("-Tempo médio de laudo (Bronquite): Não há dados\n");
+                };
+                if (totalLaudosPneumonia > 0) {
+                    printf("-Tempo médio de laudo (Pneumonia): %d unid. tempo\n", tempoTotalLaudosPneumonia / totalLaudosPneumonia);
+                } else {
+                    printf("-Tempo médio de laudo (Pneumonia): Não há dados\n");
+                };
+                if (totalLaudosFraturaFemur > 0) {
+                    printf("-Tempo médio de laudo (Fratura de Femur): %d unid. tempo\n", tempoTotalLaudosFraturaFemur / totalLaudosFraturaFemur);
+                } else {
+                    printf("-Tempo médio de laudo (Fratura de Femur): Não há dados\n");
+                };
+                if (totalLaudosApendicite > 0) {
+                    printf("-Tempo médio de laudo (Apendicite): %d unid. tempo\n", tempoTotalLaudosApendicite / totalLaudosApendicite);
+                } else {
+                    printf("-Tempo médio de laudo (Apendicite): Não há dados\n");
+                };
             } else {
                 printf("--Ainda não há métricas computadas.\n");
             }
-            if (totalLaudosNormal > 0) {printf("-Tempo médio de laudo (Normal): %ds\n", tempoTotalLaudosNormal / totalLaudosNormal);};
-            if (totalLaudosBronquite > 0) {printf("-Tempo médio de laudo (Bronquite): %ds\n", tempoTotalLaudosBronquite / totalLaudosBronquite);};
-            if (totalLaudosPneumonia > 0) {printf("-Tempo médio de laudo (Pneumonia): %ds\n", tempoTotalLaudosPneumonia / totalLaudosPneumonia);};
-            if (totalLaudosFraturaFemur > 0) {printf("-Tempo médio de laudo (Fratura de Femur): %ds\n", tempoTotalLaudosFraturaFemur / totalLaudosFraturaFemur);};
-            if (totalLaudosApendicite > 0) {printf("-Tempo médio de laudo (Apendicite): %ds\n", tempoTotalLaudosApendicite / totalLaudosApendicite);};
         }
 
         tempoMetricas++;
@@ -150,6 +170,8 @@ int main() {
     // Libera a memória utilizada pelas filas
     destruirFila(&simulacao.filaLaudos);
     destruirFila(&simulacao.filaExames);
+
+    printf("\n---Fim de expediente no hospital.\n");
 
     return 0;
 }
