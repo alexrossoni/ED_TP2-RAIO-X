@@ -57,3 +57,14 @@ Após a compilação, você pode executar o programa da seguinte maneira:
 ```
 
 ---
+
+## 💡 Principais Decisões de Implementação
+
+#### Em construção
+Decisões de implementação sendo definidas
+
+---
+
+## 👨🏽‍💻 Autor
+
+Alex Rossoni Junior
