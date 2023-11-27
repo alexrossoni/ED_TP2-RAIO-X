@@ -3,10 +3,10 @@ CFLAGS = -Wall -Wextra -std=c99
 
 OBJS = main.o simulacao.o fila.o paciente.o exame.o radiologista.o
 
-all: simular_exame
+all: simulacao_raio_x
 
-simular_exame: $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o simular_exame
+simulacao_raio_x: $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -o simulacao_raio_x
 
 main.o: main.c simulacao.h
 	$(CC) $(CFLAGS) -c main.c
@@ -27,4 +27,4 @@ radiologista.o: radiologista.c radiologista.h
 	$(CC) $(CFLAGS) -c radiologista.c
 
 clean:
-	rm -f simular_exame $(OBJS)
+	rm -f simulacao_raio_x $(OBJS)
